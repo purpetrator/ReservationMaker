@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Restaurant App</title>
+    <!-- Latest compiled and minified CSS & JS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+</head>
+
+<body>
+
+        <div class="container col-10">
+                <div class="jumbotron">
+                  <div class="container text-center">
+                    <h1>Hot Restaurant</h1>
+                    <br />
+                    <h3>Book a table here!</h3>
+                  </div>
+                  <hr />
+                  <div class="container d-flex justify-content-center">
+                    <a href="/view"
+                      ><button class="btn btn-danger btn-lg m-1">
+                        <span class="fa fa-plus"></span>View Tables
+                      </button></a
+                    >
+                    <a href="/add"
+                      ><button class="btn btn-danger btn-lg m-1">
+                        <span class="fa fa-eye"></span>Make a Reservation
+                      </button></a
+                    >
+          
+                    <a href="/"
+                      ><button class="btn btn-danger btn-lg m-1">
+                        <span class="fa fa-eye"></span>Home
+                      </button></a
+                    >
+                  </div>
+                </div>
+              </div>
+
+        <div class="row">
+
+            <div class="col-8 mx-auto">
+
+                <div class="card" id="resDiv">
+                    <div class="card-header">
+                        <h3><strong>Current Reservations</strong></h3>
+                    </div>
+                    <br>
+                </div>
+                <br>
+                <div class="card" id="waitDiv">
+                    <div class="card-header">
+                        <h3><strong>Waitlist</strong></h3>
+                    </div>
+                    <br>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    </div>
+
+    <script type="text/javascript">
+
+        $.get("/api/reservations", function (data) {
+
+            for (var i = 0; i < data.length; i++) {
+                var name = data[i].name;
+                var phone = data[i].phone;
+                var email = data[i].email;
+                var id = data[i].unique_id;
+
+                var card = $("<div>");
+                card.addClass("card border-info mb-3 form-rounded m-3 width");
+
+                var cardHeader = $("<div>");
+                cardHeader.addClass("card-header form-rounded");
+                cardHeader.text("ID: " + id);
+
+                var cardBody = $("<div>");
+                cardBody.addClass("card-body");
+                cardBody.attr("id", "res-card");
+
+                var title = $("<h4>");
+                title.text(name);
+                title.addClass("card-title");
+
+                var paragraph1 = $("<p>");
+                paragraph1.text(phone);
+                paragraph1.addClass("card-text");
+
+                var paragraph2 = $("<p>");
+                paragraph2.text(email);
+                paragraph2.addClass("card-text");
+
+                cardBody.append(title);
+                cardBody.append(paragraph1);
+                cardBody.append(paragraph2);
+                card.append(cardHeader);
+                card.append(cardBody);
+
+                $("#resDiv").append(card);
+
+            }
+        });
+
+        $.get("/api/waitlist", function (data) {
+
+            for (var i = 0; i < data.length; i++) {
+                var name = data[i].name;
+                var phone = data[i].phone;
+                var email = data[i].email;
+                var id = data[i].unique_id;
+
+                var card = $("<div>");
+                card.addClass("card border-info mb-3 form-rounded m-3 width");
+
+                var cardHeader = $("<div>");
+                cardHeader.addClass("card-header form-rounded");
+                cardHeader.text("ID: " + id);
+
+                var cardBody = $("<div>");
+                cardBody.addClass("card-body");
+                cardBody.attr("id", "res-card");
+
+                var title = $("<h4>");
+                title.text(name);
+                title.addClass("card-title");
+
+                var paragraph1 = $("<p>");
+                paragraph1.text(phone);
+                paragraph1.addClass("card-text");
+
+                var paragraph2 = $("<p>");
+                paragraph2.text(email);
+                paragraph2.addClass("card-text");
+
+                cardBody.append(title);
+                cardBody.append(paragraph1);
+                cardBody.append(paragraph2);
+                card.append(cardHeader);
+                card.append(cardBody);
+
+                $("#waitDiv").append(card);
+
+            }
+        });
+
+    </script>
+
+</body>
+
+</html>
